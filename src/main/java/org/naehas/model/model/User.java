@@ -26,13 +26,8 @@ public class User {
     @NotNull
     @Enumerated(value = EnumType.STRING)
     private Role role;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "entry_date")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
-    final private Date date = new Date();
-
     @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     private List<Book> books;
 
@@ -73,10 +68,6 @@ public class User {
         this.role = role;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     public List<Book> getBooks() {
         return books;
     }
@@ -92,7 +83,6 @@ public class User {
                 ", name='" + name + '\'' +
                 ", gender=" + gender +
                 ", role=" + role +
-                ", date=" + date +
                 '}';
     }
 }

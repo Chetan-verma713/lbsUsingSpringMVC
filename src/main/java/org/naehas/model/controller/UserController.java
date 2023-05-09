@@ -1,7 +1,5 @@
 package org.naehas.model.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.naehas.model.model.User;
 import org.naehas.model.service.UserService;
 
@@ -12,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller

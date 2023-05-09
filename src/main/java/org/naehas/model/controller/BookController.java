@@ -1,6 +1,5 @@
 package org.naehas.model.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.naehas.model.model.Book;
 import org.naehas.utils.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.naehas.model.service.BookService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/books")

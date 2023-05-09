@@ -1,14 +1,12 @@
 package org.naehas.model.service;
 
 import org.naehas.model.dao.UserDao;
-import org.naehas.model.model.Book;
 import org.naehas.model.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 @Service

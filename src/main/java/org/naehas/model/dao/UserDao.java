@@ -41,11 +41,9 @@ public class UserDao {
 
     public void borrowBook(long userId, long bookId) {
         User user = getUserById(userId);
-        System.out.println(user);
-        BookDao bookDao = new BookDao();
-        Book book = bookDao.getBookById(bookId);
-        System.out.println(book);
-        hibernateTemplate.save(user.getBooks().add(book));
+        Book book = hibernateTemplate.get(Book.class, bookId);
+        user.getBooks().add(book);
+        hibernateTemplate.merge(user);
     }
 
 }

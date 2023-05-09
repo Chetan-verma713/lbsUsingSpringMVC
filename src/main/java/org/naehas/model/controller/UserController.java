@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -73,11 +74,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{user_id}")
     @ResponseBody
-    public ResponseEntity<String> getUserById(@PathVariable long id) {
+    public ResponseEntity<String> getUserById(@PathVariable long user_id) {
         try {
-            User user = userService.getUserById(id);
+            User user = userService.getUserById(user_id);
             System.out.println(user);
             return new ResponseEntity<>(new Parser<>().toJson(user), HttpStatus.OK);
         } catch (Exception e) {
@@ -86,9 +87,9 @@ public class UserController {
         }
     }
 
-    @PostMapping("/{userId}/borrow-book")
+    @PatchMapping("/{id}/borrow")
     @ResponseBody
-    public ResponseEntity<String> borrowBook(@PathVariable long userId, @RequestParam long id) {
+    public ResponseEntity<String> borrowBook(@PathVariable("id") long userId, @RequestParam long id) {
         try {
             userService.borrowBook(userId, id);
             return new ResponseEntity<>("book issued!", HttpStatus.OK);

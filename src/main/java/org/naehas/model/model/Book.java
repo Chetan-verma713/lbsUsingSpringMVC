@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Entity(name = "BOOK")
+@Entity
 @Table(name = "book")
 public class Book {
     @Id
@@ -31,6 +31,13 @@ public class Book {
     @Temporal(TemporalType.DATE)
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date published;
+
+//    @OneToMany(
+//            mappedBy = "book",
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.LAZY
+//    )
+//    private List<UserBook> userBooks = new ArrayList<>();
 
     public Book() {
     }
@@ -113,6 +120,14 @@ public class Book {
     public void setPublished(Date published) {
         this.published = published;
     }
+
+//    public List<UserBook> setUserBooks() {
+//        return userBooks;
+//    }
+//
+//    public void setUserBooks(List<UserBook> userBooks) {
+//        this.userBooks = userBooks;
+//    }
 
     @Override
     public String toString() {

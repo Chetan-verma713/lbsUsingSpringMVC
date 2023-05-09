@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "USER")
+@Entity
 @Table(name = "user",
         uniqueConstraints = @UniqueConstraint(
                 columnNames = {"name", "gender", "role"}
@@ -17,7 +17,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     @NotNull
     private String name;
     @NotNull
@@ -31,14 +31,11 @@ public class User {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     final private Date date = new Date();
 
-//    @OneToMany annotation is used because
-//    One user can have multiple books.
     @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
-    private List<Book> books = new ArrayList<>();
+    private List<Book> books;
 
-//    CONSTRUCTORS
     public User() {
     }
 
@@ -48,7 +45,6 @@ public class User {
         setRole(Role.valueOf(role.toString().toUpperCase()));
     }
 
-    //    GETTERS AND SETTERS
     public long getId() {
         return id;
     }
@@ -89,7 +85,6 @@ public class User {
         this.books = books;
     }
 
-    //    "toString" METHOD
     @Override
     public String toString() {
         return "{" +

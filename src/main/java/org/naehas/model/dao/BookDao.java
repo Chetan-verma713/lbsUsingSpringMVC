@@ -53,7 +53,6 @@ public class BookDao {
         if (updatedBook.getPublished() == null) {
             updatedBook.setPublished(originalBook.getPublished());
         }
-        System.out.println(updatedBook);
         hibernateTemplate.merge(updatedBook);
     }
 

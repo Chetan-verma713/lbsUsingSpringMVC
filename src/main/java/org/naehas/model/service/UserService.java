@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -49,12 +50,5 @@ public class UserService {
     public void borrowBook(long userId, long bookId) {
         userDao.borrowBook(userId, bookId);
     }
-
-/*
-    @Transactional
-    public List<User> getUsersByName(String name) {
-        return userDao.getUsersByName(name);
-    }
-*/
 
 }

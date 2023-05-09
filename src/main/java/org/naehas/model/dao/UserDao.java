@@ -1,5 +1,7 @@
 package org.naehas.model.dao;
 
+import org.jetbrains.annotations.NotNull;
+import org.naehas.model.model.Book;
 import org.naehas.model.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,12 @@ public class UserDao {
         this.hibernateTemplate = hibernateTemplate;
     }
 
-    public void addUser(User user) {
+    public void addUser(@NotNull User user) {
         hibernateTemplate.save(new User(user.getName(), user.getGender(), user.getRole()));
     }
 
     public void deleteUser(long id) {
-        hibernateTemplate.delete(getUser(id));
+        hibernateTemplate.delete(getUserById(id));
     }
 
     public void updateUser(User updatedUser) {
@@ -33,16 +35,17 @@ public class UserDao {
         return hibernateTemplate.loadAll(User.class);
     }
 
-    public User getUser(Long id) {
-        return hibernateTemplate.load(User.class, id);
+    public User getUserById(long id) {
+        return hibernateTemplate.get(User.class, id);
     }
 
-/*
-    public List<User> getUsersByName(String name) {
-        return getUsers()
-                .stream()
-                .filter(user -> user.getName().contains(name))
-                .collect(Collectors.toList());
+    public void borrowBook(long userId, long bookId) {
+        User user = getUserById(userId);
+        System.out.println(user);
+        BookDao bookDao = new BookDao();
+        Book book = bookDao.getBookById(bookId);
+        System.out.println(book);
+        hibernateTemplate.save(user.getBooks().add(book));
     }
-*/
+
 }

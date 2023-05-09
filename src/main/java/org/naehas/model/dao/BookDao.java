@@ -6,8 +6,6 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Repository
 public class BookDao {
@@ -25,11 +23,11 @@ public class BookDao {
     }
 
     public void deleteBook(long id) {
-        hibernateTemplate.delete(getBook(id));
+        hibernateTemplate.delete(getBookById(id));
     }
 
     public void updateBook(Book updatedBook) {
-        Book originalBook = getBook(updatedBook.getId());
+        Book originalBook = getBookById(updatedBook.getId());
 
         if (updatedBook.getTitle() == null) {
             updatedBook.setTitle(originalBook.getTitle());
@@ -49,9 +47,6 @@ public class BookDao {
         if (updatedBook.getPublisher() == null) {
             updatedBook.setPublisher(originalBook.getPublisher());
         }
-        if (updatedBook.getWebsite() == null) {
-            updatedBook.setWebsite(originalBook.getWebsite());
-        }
         if (updatedBook.getPages() == 0) {
             updatedBook.setPages(originalBook.getPages());
         }
@@ -62,19 +57,12 @@ public class BookDao {
         hibernateTemplate.merge(updatedBook);
     }
 
-    public List<Book> getAllBooks() {
+    public List<Book> getBooks() {
         return hibernateTemplate.loadAll(Book.class);
     }
 
-    public Book getBook(long id) {
-        return hibernateTemplate.load(Book.class, id);
-    }
-
-    public List<Book> getAllBookByName(String title) {
-        return getAllBooks()
-                .stream()
-                .filter(book -> Objects.equals(book.getTitle(), title))
-                .collect(Collectors.toList());
+    public Book getBookById(long id) {
+        return hibernateTemplate.get(Book.class, id);
     }
 
 }

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "USER")
 @Table(name = "user",
@@ -28,6 +30,13 @@ public class User {
     @Column(name = "entry_date")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     final private Date date = new Date();
+
+//    @OneToMany annotation is used because
+//    One user can have multiple books.
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    private List<Book> books = new ArrayList<>();
 
 //    CONSTRUCTORS
     public User() {
@@ -70,6 +79,14 @@ public class User {
 
     public Date getDate() {
         return date;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     //    "toString" METHOD

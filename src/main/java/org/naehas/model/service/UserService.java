@@ -1,6 +1,7 @@
 package org.naehas.model.service;
 
 import org.naehas.model.dao.UserDao;
+import org.naehas.model.model.Book;
 import org.naehas.model.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,13 @@ public class UserService {
     }
 
     @Transactional
-    public User getUser(Long id) {
-        return userDao.getUser(id);
+    public User getUserById(long id) {
+        return userDao.getUserById(id);
+    }
+
+    @Transactional
+    public void borrowBook(long userId, long bookId) {
+        userDao.borrowBook(userId, bookId);
     }
 
 /*

@@ -1,5 +1,7 @@
 package org.naehas.model.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -23,24 +25,23 @@ public class Book {
     private String publisher;
     @NotNull
     private String description;
-    private String website;
     @NotNull
     private int pages;
     @NotNull
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date published;
 
     public Book() {
     }
 
-    public Book(String title, String subtitle, String isbn, String author, String publisher, String description, String website, int pages, Date published) {
+    public Book(String title, String subtitle, String isbn, String author, String publisher, String description, int pages, Date published) {
         this.title = title;
         this.subtitle = subtitle;
         this.isbn = isbn;
         this.author = author;
         this.publisher = publisher;
         this.description = description;
-        this.website = website;
         this.pages = pages;
         this.published = published;
     }
@@ -97,14 +98,6 @@ public class Book {
         this.description = description;
     }
 
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
     public int getPages() {
         return pages;
     }
@@ -123,7 +116,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
@@ -131,7 +124,6 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", description='" + description + '\'' +
-                ", website='" + website + '\'' +
                 ", pages=" + pages +
                 ", published=" + published +
                 '}';

@@ -1,6 +1,8 @@
 package org.naehas.model.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.naehas.model.model.Book;
+import org.naehas.utils.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,17 +58,27 @@ public class BookController {
         }
     }
 
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity<String> getBooks() {
+        try {
+
+            return new ResponseEntity<>(new Parser<>().toJson(bookService.getBooks()), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
-    public Book getBook(long id) {
-        return bookService.getBook(id);
+    @GetMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<String> getBookById(@PathVariable long id) {
+        try {
+            Book book = bookService.getBookById(id);
+            return new ResponseEntity<>(new Parser<>().toJson(book), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
-
-    public List<Book> getAllBookByName(String title) {
-        return bookService.getAllBookByName(title);
-    }
-
 
 }

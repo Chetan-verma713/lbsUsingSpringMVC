@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.naehas.model.model.User;
 import org.naehas.model.service.UserService;
 
+import org.naehas.utils.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +66,7 @@ public class UserController {
         try {
             List<User> users = userService.getUsers();
             System.out.println(users);
-            return new ResponseEntity<>(new ObjectMapper().writeValueAsString(users), HttpStatus.OK);
+            return new ResponseEntity<>(new Parser<>().toJson(users), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>("something went wrong!", HttpStatus.BAD_REQUEST);
@@ -74,29 +75,27 @@ public class UserController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<String> getUser(@PathVariable Long id) {
+    public ResponseEntity<String> getUserById(@PathVariable long id) {
         try {
-            User user = userService.getUser(id);
+            User user = userService.getUserById(id);
             System.out.println(user);
-            return new ResponseEntity<>(new ObjectMapper().writeValueAsString(user), HttpStatus.OK);
+            return new ResponseEntity<>(new Parser<>().toJson(user), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("something went wrong!", HttpStatus.BAD_REQUEST);
         }
     }
-/*
-    @GetMapping
+
+    @PostMapping("/{userId}/borrow-book")
     @ResponseBody
-    public ResponseEntity<String> getUserByName(@RequestParam String name) {
+    public ResponseEntity<String> borrowBook(@PathVariable long userId, @RequestParam long id) {
         try {
-            List<User> users = userService.getUsersByName(name);
-            System.out.println(users);
-            return new ResponseEntity<>(new ObjectMapper().writeValueAsString(users), HttpStatus.OK);
+            userService.borrowBook(userId, id);
+            return new ResponseEntity<>("book issued!", HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("something went wrong!", HttpStatus.BAD_REQUEST);
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>("book is not issued!", HttpStatus.BAD_REQUEST);
         }
     }
-*/
 
 }

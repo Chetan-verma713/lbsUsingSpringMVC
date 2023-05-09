@@ -35,18 +35,13 @@ public class BookService {
     }
 
     @Transactional
-    public List<Book> getAllBooks() {
-        return bookDao.getAllBooks();
+    public List<Book> getBooks() {
+        return bookDao.getBooks();
     }
 
     @Transactional
-    public Book getBook(long id) {
-        return bookDao.getBook(id);
-    }
-
-    @Transactional
-    public List<Book> getAllBookByName(String title) {
-        return bookDao.getAllBookByName(title);
+    public Book getBookById(long id) {
+        return bookDao.getBookById(id);
     }
 
 }

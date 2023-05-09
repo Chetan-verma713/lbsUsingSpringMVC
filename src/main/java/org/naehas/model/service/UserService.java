@@ -49,4 +49,10 @@ public class UserService {
         userDao.borrowBook(userId, bookId);
     }
 
+    @Transactional
+    public void returnBook(long userId, long bookId) {
+        userDao.returnBook(userId, bookId);
+    }
+
+
 }

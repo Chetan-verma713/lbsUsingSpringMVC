@@ -46,4 +46,12 @@ public class UserDao {
         hibernateTemplate.merge(user);
     }
 
+    public void returnBook(long userId, long bookId) {
+        User user = getUserById(userId);
+        Book book = hibernateTemplate.get(Book.class, bookId);
+        user.getBooks().remove(book);
+        hibernateTemplate.merge(user);
+    }
+
+
 }

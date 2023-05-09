@@ -96,4 +96,16 @@ public class UserController {
         }
     }
 
+    @PatchMapping("/{id}/return")
+    @ResponseBody
+    public ResponseEntity<String> returnBook(@PathVariable("id") long userId, @RequestParam long id) {
+        try {
+            userService.returnBook(userId, id);
+            return new ResponseEntity<>("book returned!", HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>("book is not returned!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

@@ -89,7 +89,7 @@ public class UserController {
             return new ResponseEntity<>("book issued!", HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<>("book is not issued!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("book is not issued!", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -101,7 +101,7 @@ public class UserController {
             return new ResponseEntity<>("book returned!", HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<>("book is not returned!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("book is not returned!", HttpStatus.NOT_FOUND);
         }
     }
 

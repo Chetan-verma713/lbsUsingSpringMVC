@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -20,7 +21,7 @@ public class UserDao {
     }
 
     public void addUser(@NotNull User user) {
-        hibernateTemplate.save(new User(user.getName(), user.getGender(), user.getRole()));
+        hibernateTemplate.save(new User(user.getName(), user.getGender(), user.getRole(), user.getEmail(), user.getPassword()));
     }
 
     public void deleteUser(long id) {

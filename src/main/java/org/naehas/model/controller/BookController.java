@@ -62,7 +62,7 @@ public class BookController {
 
             return new ResponseEntity<>(new Parser<>().toJson(bookService.getBooks()), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("something went wrong", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -74,8 +74,21 @@ public class BookController {
             return new ResponseEntity<>(new Parser<>().toJson(book), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("something went wrong", HttpStatus.NOT_FOUND);
         }
     }
+
+    @PatchMapping("/{id}/update-stock")
+    @ResponseBody
+    public ResponseEntity<String> updateStock(@PathVariable long id, @RequestParam int count) {
+        try {
+            bookService.updateStock(id, count);
+            return new ResponseEntity<>("stock updated", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("stock not updated", HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 }

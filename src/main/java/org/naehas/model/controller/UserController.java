@@ -49,7 +49,6 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<String> updateUser(@RequestBody User user) {
         try {
-            System.out.println(user);
             userService.updateUser(user);
             return new ResponseEntity<>("user updated!", HttpStatus.OK);
         } catch (Exception e) {
@@ -63,7 +62,6 @@ public class UserController {
     public ResponseEntity<String> getUsers() {
         try {
             List<User> users = userService.getUsers();
-            System.out.println(users);
             return new ResponseEntity<>(new Parser<>().toJson(users), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -76,7 +74,6 @@ public class UserController {
     public ResponseEntity<String> getUserById(@PathVariable long user_id) {
         try {
             User user = userService.getUserById(user_id);
-            System.out.println(user);
             return new ResponseEntity<>(new Parser<>().toJson(user), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

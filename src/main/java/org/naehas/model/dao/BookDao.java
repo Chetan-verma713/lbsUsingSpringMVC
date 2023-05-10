@@ -64,4 +64,10 @@ public class BookDao {
         return hibernateTemplate.get(Book.class, id);
     }
 
+    public void updateStock(long id, int count) {
+        Book book = getBookById(id);
+        book.setInStock(book.getInStock()+count);
+        hibernateTemplate.merge(book);
+    }
+
 }

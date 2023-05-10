@@ -1,8 +1,11 @@
 package org.naehas.model.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -31,6 +34,8 @@ public class Book {
     @Temporal(TemporalType.DATE)
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date published;
+    @Min(value = 0)
+    private int inStock;
 
     public Book() {
     }
@@ -112,6 +117,22 @@ public class Book {
 
     public void setPublished(Date published) {
         this.published = published;
+    }
+
+    public int getInStock() {
+        return inStock;
+    }
+
+    public void setInStock(int inStock) {
+        this.inStock = inStock;
+    }
+
+    public void minusStock() {
+        inStock--;
+    }
+
+    public void plusStock() {
+        inStock++;
     }
 
     @Override

@@ -44,4 +44,9 @@ public class BookService {
         return bookDao.getBookById(id);
     }
 
+    @Transactional
+    public void updateStock(long id, int count) {
+        bookDao.updateStock(id, count);
+    }
+
 }

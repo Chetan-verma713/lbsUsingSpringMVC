@@ -42,14 +42,20 @@ public class UserDao {
     public void borrowBook(long userId, long bookId) {
         User user = getUserById(userId);
         Book book = hibernateTemplate.get(Book.class, bookId);
-        user.getBooks().add(book);
-        hibernateTemplate.merge(user);
+        if (book.getInStock() > 0) {
+            book.minusStock();
+            user.getBooks().add(new Book(book.getTitle(), book.getSubtitle(), book.getDescription(), book.getAuthor(), book.getPublisher(), book.getIsbn(), book.getPages(), book.getPublished()));
+            hibernateTemplate.merge(user);
+        } else {
+            throw new RuntimeException("book not in stock");
+        }
     }
 
     public void returnBook(long userId, long bookId) {
         User user = getUserById(userId);
         Book book = hibernateTemplate.get(Book.class, bookId);
         user.getBooks().remove(book);
+        book.plusStock();
         hibernateTemplate.merge(user);
     }
 

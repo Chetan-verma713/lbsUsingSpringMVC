@@ -22,6 +22,15 @@ public class BookDao {
         hibernateTemplate.save(book);
     }
 
+    public void addBooks(List<Book> books) {
+        for (Book book : books) {
+            if (book.getDescription().length() > 250) {
+                book.setDescription(book.getDescription().substring(0, 245) + "...");
+            }
+            hibernateTemplate.save(book);
+        }
+    }
+
     public void deleteBook(long id) {
         hibernateTemplate.delete(getBookById(id));
     }

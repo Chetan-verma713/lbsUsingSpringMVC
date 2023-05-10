@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.naehas.model.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/books")
 public class BookController {
@@ -18,6 +20,19 @@ public class BookController {
     public void setBookService(BookService bookService) {
         this.bookService = bookService;
     }
+
+    @PostMapping("/bulk")
+    @ResponseBody
+    public ResponseEntity<String> addBooks(@RequestBody List<Book> books) {
+        try {
+            bookService.addBooks(books);
+            return new ResponseEntity<>("book inserted!", HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>("book not inserted!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @PostMapping
     @ResponseBody

@@ -25,6 +25,11 @@ public class BookService {
     }
 
     @Transactional
+    public void addBooks(List<Book> books) {
+        bookDao.addBooks(books);
+    }
+
+    @Transactional
     public void deleteBook(long id) {
         bookDao.deleteBook(id);
     }
